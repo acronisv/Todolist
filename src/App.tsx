@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 
-//type buttonNameType = "Active" | "Completed" | "All"
+
 function App() {
     let [tasks, setTasks] = useState([
         {id: 1, title: "HTML&CSS", isDone: true},

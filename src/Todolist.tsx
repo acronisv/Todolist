@@ -7,6 +7,8 @@ type PropsType = {
     // filterTasks: (buttonName:string)=>void
 }
 
+type filteredValueType = "Active" | "Completed" | "All"
+
 type TaskType = {
     id: number
     title: string
@@ -15,7 +17,7 @@ type TaskType = {
 
 export const Todolist = (props: PropsType) => {
 
-    const [filter, setFilter] = useState("All")
+    const [filter, setFilter] = useState<filteredValueType>("All")
 
     let colander = props.tasks
 
@@ -26,7 +28,7 @@ export const Todolist = (props: PropsType) => {
         colander = props.tasks.filter(el => el.isDone)
     }
 
-    const filterTasks = (filteredValue: string) => {
+    const filterTasks = (filteredValue: filteredValueType) => {
         setFilter(filteredValue)
         console.log(filteredValue)
     }
