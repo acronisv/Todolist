@@ -1,21 +1,23 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button} from "./Button";
 
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId:number)=>void
-    // filterTasks: (buttonName:string)=>void
+    removeTask: (taskId: string) => void
+    addTask: (text: string) => void
 }
 
 type filteredValueType = "Active" | "Completed" | "All"
 
 type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
 
 export const Todolist = (props: PropsType) => {
+    const [text, setText] = useState('')
 
     const [filter, setFilter] = useState<filteredValueType>("All")
 
@@ -30,21 +32,44 @@ export const Todolist = (props: PropsType) => {
 
     const filterTasks = (filteredValue: filteredValueType) => {
         setFilter(filteredValue)
-        console.log(filteredValue)
+    }
+
+    const onClickButtonHandler = () => {
+        props.addTask(text)
+        setText('')
+    }
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setText(event.currentTarget.value)
+    }
+
+    const onKeyPressInputHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onClickButtonHandler()
+        }
+    }
+
+    const allChangeFilterHandler = (filterValue: filteredValueType) => {
+        filterTasks(filterValue)
+    }
+
+    const removeTaskHandler = (id: string) => {
+        props.removeTask(id)
     }
 
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={text} onChange={onChangeInputHandler} onKeyPress={onKeyPressInputHandler}/>
+                {/*<button onClick={onClickButtonHandler}>+</button>*/}
+                <Button callback={onClickButtonHandler} name={"+"}/>
             </div>
             <ul>
-                {colander.map((el,index) => {
+                {colander.map((el, index) => {
                         return (
                             <li key={index}>
-                                <button onClick={()=>props.removeTask(el.id)}>X</button>
+                                <button onClick={() => removeTaskHandler(el.id)}>X</button>
                                 <input type="checkbox" checked={el.isDone}/> <span>{el.title}</span>
                             </li>
                         )
@@ -53,10 +78,13 @@ export const Todolist = (props: PropsType) => {
             </ul>
 
             <div>
-                <button onClick={()=>{filterTasks("All")}}>All</button>
-                <button onClick={()=>{filterTasks("Active")}}>Active</button>
-                <button onClick={()=>{filterTasks("Completed")}}>Completed</button>
+                <Button callback={() => allChangeFilterHandler('All')} name={"All"}/>
+                <Button callback={() => allChangeFilterHandler('Active')} name={"Active"}/>
+                <Button callback={() => allChangeFilterHandler('Completed')} name={"Completed"}/>
+                {/*<button onClick={() => allChangeFilterHandler('All')}>All</button>*/}
+                {/*<button onClick={() => allChangeFilterHandler('Active')}>Active</button>*/}
+                {/*<button onClick={() => allChangeFilterHandler('Completed')}>Completed</button>*/}
             </div>
         </div>
-    )
+    );
 }
