@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -23,12 +23,23 @@ function App() {
         setTasks([newTask, ...tasks])
     }
 
+    const changeIsDone = (taskId: string, isDoneValue: boolean) => {
+        // let currentTask = tasks.find((el)=>el.id===taskId)
+        // if(currentTask) {
+        //     currentTask.isDone=isDoneValue
+        //     setTasks([...tasks])
+        // }
+
+        setTasks(tasks.map(el=>el.id===taskId? {...el,isDone: isDoneValue} : el))
+    }
+
     return (
         <div className="App">
             <Todolist title="What to learn"
                       tasks={tasks}
                       removeTask={removeTask}
                       addTask={addTask}
+                      changeIsDone={changeIsDone}
             />
         </div>
     );
