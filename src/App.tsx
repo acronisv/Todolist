@@ -90,27 +90,29 @@ function App() {
 
     //UI:
 
-
-    const todoListComponents = todoLists.map((tl) => {
-        let tasksForRender;
-        switch (tl.filter) {
+    const getTasksForRender = (todolist: TodoListType, tasks: TaskStateType) => {
+        let tasksForRender: Array<TaskType>
+        switch (todolist.filter) {
             case "completed":
-                tasksForRender = tasks[tl.id].filter(task => task.isDone)
+                tasksForRender = tasks[todolist.id].filter(task => task.isDone)
                 break
             case "active":
-                tasksForRender = tasks[tl.id].filter(task => !task.isDone)
+                tasksForRender = tasks[todolist.id].filter(task => !task.isDone)
                 break
             default:
-                tasksForRender = tasks[tl.id]
+                tasksForRender = tasks[todolist.id]
         }
+        return tasksForRender
+    }
 
+    const todoListComponents = todoLists.map((tl) => {
         return (
             <Grid item>
                 <Paper style={{padding: '20px'}} elevation={3}>
                     <TodoList
                         todoListID={tl.id}
                         title={tl.title}
-                        tasks={tasksForRender}
+                        tasks={getTasksForRender(tl, tasks)}
                         filter={tl.filter}
                         removeTask={removeTask}
                         removeTodoList={removeTodoList}
