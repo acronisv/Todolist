@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType} from './Todolist';
 
@@ -32,15 +32,16 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
+    // console.log('App')
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists)
-    const addTodoList = (title: string) => {
+    const addTodoList = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }
+    }, [dispatch])
 
     const todoListComponents = todolists.map((tl: TodolistType) => {
         return (
-            <Grid item>
+            <Grid item key={tl.id}>
                 <Paper style={{padding: '20px'}} elevation={3}>
                     <TodolistWithRedux
                         todolist={tl}

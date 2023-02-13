@@ -7,7 +7,8 @@ type AddItemFormPropsType = {
     errorColor: string
 }
 
-const AddItemForm = (props: AddItemFormPropsType) => {
+const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+    // console.log('Add item form')
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
     const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +38,10 @@ const AddItemForm = (props: AddItemFormPropsType) => {
                 helperText={error && 'Title is required!'}
             />
             <IconButton size='small' onClick={onClickAddItem}>
-                <AddBoxOutlined  fontSize='large'/>
+                <AddBoxOutlined fontSize='large'/>
             </IconButton>
         </div>
     );
-};
+});
 
 export default AddItemForm;
