@@ -77,7 +77,7 @@ export const UpdateTodolistTasks = () => {
         const todolistId = '19c6d7ae-5d07-405c-b7a4-ed67b011ac09'
         const taskId = '8e92ef01-172c-41f8-868c-ae48a883e665'
         const title = 'HTML'
-        todolistAPI.updateTodolistTasks(todolistId, taskId, title).then((data) => setState(data))
+        // todolistAPI.updateTodolistTasks(todolistId, taskId, title).then((data) => setState(data))
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }

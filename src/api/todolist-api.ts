@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
-type TodolistType = {
+export type TodolistType = {
     addedDate: string
     id: string
     order: number
@@ -13,11 +13,35 @@ type ResponseType<T = {}> = {
     resultCode: number
 }
 
-type TaskType = {
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
+}
+
+export type TaskType = {
     description: string
     title: string
     completed: boolean
-    status: number
+    status: TaskStatuses
     priority: number
     startDate: string
     deadline: string
@@ -28,7 +52,7 @@ type TaskType = {
 }
 
 type GetTaskResponseType = {
-    item: TaskType[],
+    items: TaskType[],
     totalCount: number,
     error: string
 }
@@ -42,35 +66,27 @@ export const todolistAPI = {
     // Get Todolists
     getTodolists() {
         return instance.get<TodolistType[]>(`/todo-lists`)
-            .then((res) => res.data)
     },
     createTodolist(title: string) {
         return instance.post<ResponseType<{ item: TodolistType }>>(`/todo-lists`, {title})
-            .then((res) => res.data)
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType>(`/todo-lists/${todolistId}`)
-            .then((res) => res.data)
     },
     updateTodolistTitle(todolistId: string, title: string) {
         return instance.put<ResponseType>(`/todo-lists/${todolistId}`, {title})
-            .then((res) => res.data)
     },
     // Get Tasks
     getTodolistTasks(todolistId: string) {
         return instance.get<GetTaskResponseType>(`/todo-lists/${todolistId}/tasks`)
-            .then((res) => res.data)
     },
     createTodolistTasks(todolistId: string, title: string) {
         return instance.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
-            .then((res) => res.data)
     },
     deleteTodolistTasks(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
-            .then((res) => res.data)
     },
-    updateTodolistTasks(todolistId: string, taskId: string, title: string) {
-        return instance.put<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks/${taskId}`, {title})
-            .then((res) => res.data)
+    updateTodolistTasks(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+        return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`/todo-lists/${todolistId}/tasks/${taskId}`, model)
     }
 }
