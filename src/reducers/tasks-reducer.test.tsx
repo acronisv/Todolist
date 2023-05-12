@@ -1,7 +1,7 @@
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
 
 import {addTodolistAC} from "./todolists-reducer";
-import {TasksStateType} from "../App";
+import {TasksStateType} from "../app/App";
 
 // test('correct task should be deleted from correct array', () => {
 //     const startState: TasksStateType = {

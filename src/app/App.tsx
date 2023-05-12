@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 
-import AddItemForm from "./AddItemForm";
+import AddItemForm from "../components/AddItemForm/AddItemForm";
 import {AppBar, Button, IconButton, Paper, Typography, Toolbar, Container, Grid} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {createTodoTC, getTodoTC, TodolistDomainType} from "./reducers/todolists-reducer";
+import {createTodoTC, getTodoTC, TodolistDomainType} from "../reducers/todolists-reducer";
 import {useSelector} from "react-redux";
-import {AppRootState, useAppDispatch} from "./state/store";
-import TodolistWithRedux from "./TodolistWithRedux";
-import {TaskType} from "./api/todolist-api";
+import {AppRootState, useAppDispatch} from "./store";
+import TodolistWithRedux from "../features/Todolist/Todolist";
+import {TaskType} from "../api/todolist-api";
 
 // CRUD
 // create +

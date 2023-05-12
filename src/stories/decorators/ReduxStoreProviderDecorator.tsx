@@ -1,6 +1,6 @@
 import React from "react";
 import {Provider} from "react-redux";
-import {AppRootState} from "../../state/store";
+import {AppRootState} from "../../app/store";
 import {combineReducers, createStore} from "redux";
 import {todolistsReducer} from "../../reducers/todolists-reducer";
 import {tasksReducer} from "../../reducers/tasks-reducer";

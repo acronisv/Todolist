@@ -1,10 +1,10 @@
 import React, {ChangeEvent, FC, useCallback, useEffect} from 'react';
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import AddItemForm from "../../components/AddItemForm/AddItemForm";
+import EditableSpan from "../../components/EditableSpan/EditableSpan";
 import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
 import {BackspaceOutlined, DeleteForeverOutlined} from "@material-ui/icons";
 import {useSelector} from "react-redux";
-import {AppRootState, useAppDispatch} from "./state/store";
+import {AppRootState, useAppDispatch} from "../../app/store";
 
 import {
     changeTaskTitleTC,
@@ -12,20 +12,20 @@ import {
     deleteTaskTC,
     getTasksTC,
     updateTaskStatusTC
-} from "./reducers/tasks-reducer";
+} from "../../reducers/tasks-reducer";
 import {
     changeTodolistFilterAC, deleteTodoTC,
     TodolistDomainType, updateTodoTitleTC
-} from "./reducers/todolists-reducer";
-import {FilterValuesType} from "./App";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+} from "../../reducers/todolists-reducer";
+import {FilterValuesType} from "../../app/App";
+import {TaskStatuses, TaskType} from "../../api/todolist-api";
 
 type TodoListPropsType = {
     todolist: TodolistDomainType
 }
 
 
-const TodoListWithRedux: FC<TodoListPropsType> = React.memo((props) => {
+const Todolist: FC<TodoListPropsType> = React.memo((props) => {
     // console.log('Todolist')
     let {id, title, filter} = props.todolist
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id])
@@ -100,7 +100,7 @@ const TodoListWithRedux: FC<TodoListPropsType> = React.memo((props) => {
     )
 });
 
-export default TodoListWithRedux;
+export default Todolist;
 
 type TaskPropsType = {
     task: TaskType

@@ -2,9 +2,9 @@ import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
-import {store} from "./state/store";
+import {store} from "./app/store";
 import {createRoot} from "react-dom/client";
-import App from "./App";
+import App from "./app/App";
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement as HTMLElement)
