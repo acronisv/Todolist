@@ -7,7 +7,7 @@ import {Menu} from "@material-ui/icons";
 import {createTodoTC, getTodoTC, TodolistDomainType} from "../reducers/todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootState, useAppDispatch} from "./store";
-import TodolistWithRedux from "../features/Todolist/Todolist";
+import Todolist from "../features/Todolist/Todolist";
 import {TaskType} from "../api/todolist-api";
 
 // CRUD
@@ -37,7 +37,7 @@ function App() {
         return (
             <Grid item key={tl.id}>
                 <Paper style={{padding: '20px'}} elevation={3}>
-                    <TodolistWithRedux
+                    <Todolist
                         todolist={tl}
                     />
                 </Paper>
