@@ -5,6 +5,7 @@ import {AddBoxOutlined} from "@material-ui/icons";
 type AddItemFormPropsType = {
     addItem: (title: string) => void
     errorColor: string
+    disabled?: boolean
 }
 
 const AddItemForm = React.memo((props: AddItemFormPropsType) => {
@@ -36,8 +37,9 @@ const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 label='Title'
                 error={error}
                 helperText={error && 'Title is required!'}
+                disabled={props.disabled}
             />
-            <IconButton size='small' onClick={onClickAddItem}>
+            <IconButton size='small' onClick={onClickAddItem} disabled={props.disabled}>
                 <AddBoxOutlined fontSize='large'/>
             </IconButton>
         </div>

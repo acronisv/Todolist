@@ -19,9 +19,11 @@ import {
 } from "../../reducers/todolists-reducer";
 import {FilterValuesType} from "../../app/App";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
+import {RequestStatusType} from "../../reducers/app-reducer";
 
 type TodoListPropsType = {
     todolist: TodolistDomainType
+    entityStatus: RequestStatusType
 }
 
 
@@ -65,12 +67,13 @@ const Todolist: FC<TodoListPropsType> = React.memo((props) => {
             <h2>
                 <EditableSpan title={title} changeTitle={changeTodoListTitle}/>
                 <IconButton
+                    disabled={props.entityStatus === 'loading'}
                     size='small'
                     onClick={() => dispatch(deleteTodoTC(id))}>
                     <DeleteForeverOutlined/>
                 </IconButton>
             </h2>
-            <AddItemForm addItem={addTask} errorColor={"hotpink"}/>
+            <AddItemForm addItem={addTask} errorColor={"hotpink"} disabled={props.entityStatus === 'loading'}/>
             <List>
                 {tasksItems}
             </List>

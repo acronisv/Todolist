@@ -2,13 +2,25 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 
 import AddItemForm from "../components/AddItemForm/AddItemForm";
-import {AppBar, Button, IconButton, Paper, Typography, Toolbar, Container, Grid} from "@material-ui/core";
+import {
+    AppBar,
+    Button,
+    IconButton,
+    Paper,
+    Typography,
+    Toolbar,
+    Container,
+    Grid,
+    LinearProgress
+} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {createTodoTC, getTodoTC, TodolistDomainType} from "../reducers/todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootState, useAppDispatch} from "./store";
 import Todolist from "../features/Todolist/Todolist";
 import {TaskType} from "../api/todolist-api";
+import {RequestStatusType} from "../reducers/app-reducer";
+import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
 
 // CRUD
 // create +
@@ -32,6 +44,7 @@ function App() {
     const addTodoList = useCallback((title: string) => {
         dispatch(createTodoTC(title))
     }, [dispatch])
+    const status = useSelector<AppRootState, RequestStatusType>(state=>state.app.status)
 
     const todoListComponents = todolists.map((tl: TodolistDomainType) => {
         return (
@@ -39,6 +52,7 @@ function App() {
                 <Paper style={{padding: '20px'}} elevation={3}>
                     <Todolist
                         todolist={tl}
+                        entityStatus={tl.entityStatus}
                     />
                 </Paper>
             </Grid>
@@ -51,6 +65,7 @@ function App() {
 
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar style={{justifyContent: "space-between"}}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -61,6 +76,7 @@ function App() {
                     </Typography>
                     <Button color="inherit" variant={"outlined"}>Login</Button>
                 </Toolbar>
+                {status == 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0'}}>
